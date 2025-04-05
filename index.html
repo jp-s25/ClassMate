@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classmate - Organizador Estudiantil</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Classmate</h1>
+            <div class="tab-container">
+                <button class="tab-button active" onclick="switchTab('tasks')">Tareas</button>
+                <button class="tab-button" onclick="switchTab('schedule')">Horario</button>
+            </div>
+        </header>
+
+        <!-- Sección de Tareas -->
+        <section id="tasks-section" class="active-section">
+            <div class="task-input">
+                <input type="text" id="newTask" placeholder="Nueva tarea...">
+                <select id="daySelect">
+                    <option value="lunes">Lunes</option>
+                    <option value="martes">Martes</option>
+                    <option value="miercoles">Miércoles</option>
+                    <option value="jueves">Jueves</option>
+                    <option value="viernes">Viernes</option>
+                    <option value="sabado">Sábado</option>
+                    <option value="domingo">Domingo</option>
+                </select>
+                <button onclick="addTask()">Agregar Tarea</button>
+            </div>
+            <main class="days-container">
+                <div class="day" id="lunes">
+                    <h2>Lunes</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="martes">
+                    <h2>Martes</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="miercoles">
+                    <h2>Miércoles</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="jueves">
+                    <h2>Jueves</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="viernes">
+                    <h2>Viernes</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="sabado">
+                    <h2>Sábado</h2>
+                    <ul class="task-list"></ul>
+                </div>
+                <div class="day" id="domingo">
+                    <h2>Domingo</h2>
+                    <ul class="task-list"></ul>
+                </div>
+            </main>
+        </section>
+                
+        <section id="schedule-section" class="hidden-section">
+            <div class="schedule-input">
+                <input type="text" id="className" placeholder="Nombre de la clase">
+                <div class="time-inputs">
+                    <input type="time" id="startTime" min="07:00" max="23:59">
+                    <span>a</span>
+                    <input type="time" id="endTime" min="07:00" max="23:59">
+                </div>
+                <select id="scheduleDaySelect">
+                    <option value="lunes">Lunes</option>
+                    <option value="martes">Martes</option>
+                    <option value="miercoles">Miércoles</option>
+                    <option value="jueves">Jueves</option>
+                    <option value="viernes">Viernes</option>
+                </select>
+                <button onclick="addClass()">Agregar Clase</button>
+            </div>
+
+            <div class="schedule-list">
+                <div class="day-schedule" id="lunes-schedule">
+                    <h3>Lunes</h3>
+                    <div class="class-list"></div>
+                </div>
+                <div class="day-schedule" id="martes-schedule">
+                    <h3>Martes</h3>
+                    <div class="class-list"></div>
+                </div>
+                <div class="day-schedule" id="miercoles-schedule">
+                    <h3>Miércoles</h3>
+                    <div class="class-list"></div>
+                </div>
+                <div class="day-schedule" id="jueves-schedule">
+                    <h3>Jueves</h3>
+                    <div class="class-list"></div>
+                </div>
+                <div class="day-schedule" id="viernes-schedule">
+                    <h3>Viernes</h3>
+                    <div class="class-list"></div>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2023 Classmate. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+    <script src="assets/js/scripts.js"></script>
+</body>
+</html>
