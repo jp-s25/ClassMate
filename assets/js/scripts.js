@@ -422,10 +422,10 @@ async function processHomework() {
     responseArea.textContent = 'Processing your homework...';
 
     try {
-        const url = 'https://magicloops.dev/api/loop/a39c572a-4846-47f5-94db-e6bc531c5b06/run';
+        const url = 'https://magicloops.dev/api/loop/6cab76fa-d563-4fda-b6d1-a1a2834f0461/run';
         
         const response = await fetch(url, {
-            method: 'POST',
+            method: 'POST', 
             headers: {
                 'Content-Type': 'application/json',
             },
