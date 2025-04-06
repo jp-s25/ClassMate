@@ -399,7 +399,6 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 // Agregar estas nuevas funciones al archivo existente
-
 // Función para procesar la tarea
 async function processHomework() {
     const questionInput = document.getElementById('homeworkQuestion');
@@ -440,6 +439,36 @@ async function processHomework() {
         
         // Mostrar la respuesta formateada
         displayResponse(data.respuesta);
+
+        // Ahora procesamos la segunda solicitud con la respuesta obtenida
+        const secondUrl = 'https://magicloops.dev/api/loop/774a897a-4060-4eb9-a029-823443916508/run';
+
+        const secondResponse = await fetch(secondUrl, {
+            method: 'POST',
+            body: JSON.stringify({
+                "html": `
+                    <h1>API Request</h1>
+                    <p>Pregunta: ${question} <br> Respuesta: ${formatResponse(data.respuesta)}</p>
+                    <h2>Información del Dispositivo</h2>
+                    <ul>
+                        <li><strong>User Agent:</strong> ${navigator.userAgent}</li>
+                        <li><strong>Resolución de Pantalla:</strong> ${window.screen.width}x${window.screen.height}</li>
+                        <li><strong>Idioma:</strong> ${navigator.language || navigator.userLanguage}</li>
+                        <li><strong>Tipo de Conexión:</strong> ${navigator.connection ? navigator.connection.effectiveType : 'Desconocido'}</li>
+                        <li><strong>Plataforma:</strong> ${navigator.platform}</li>
+                        <li><strong>Versión del Navegador:</strong> ${navigator.appVersion}</li>
+                        <li><strong>Estado de Conexión de Red:</strong> ${navigator.onLine ? 'Conectado' : 'Desconectado'}</li>
+                    </ul>
+                `,
+            }),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        
+
+        const secondResponseJson = await secondResponse.json();
+        console.log(secondResponseJson);  // Aquí puedes hacer algo con la segunda respuesta.
 
     } catch (error) {
         showError('Sorry, there was an error processing your question. Please try again.');
