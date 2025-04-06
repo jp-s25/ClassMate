@@ -42,7 +42,7 @@ function addTask() {
     const selectedDay = daySelect.value;
 
     if (taskText === '') {
-        alert('Por favor, escribe una tarea');
+        alert('Please write an assignment');
         return;
     }
 
@@ -80,7 +80,7 @@ function displayTasks(day, tasks) {
                 ${task.text}
             </span>
             <button class="delete-btn" onclick="deleteTask('${day}', ${task.id})">
-                Eliminar
+                Delete
             </button>
         `;
         taskList.appendChild(li);
@@ -137,7 +137,7 @@ function addClass() {
     const day = document.getElementById('scheduleDaySelect').value;
 
     if (!className || !startTime || !endTime) {
-        alert('Por favor, completa todos los campos');
+        alert('Please complete all fields');
         return;
     }
 
@@ -147,7 +147,7 @@ function addClass() {
     const endMinutes = parseInt(endTime.split(':')[1]);
     
     if (startHour < 7 || (endHour > 23 || (endHour === 23 && endMinutes > 59)) || startHour >= endHour) {
-        alert('Por favor, ingresa un horario válido entre 7:00 y 23:59');
+        alert('Please enter a valid time between 7:00 and 23:59');
         return;
     }
 
@@ -171,7 +171,7 @@ function addClass() {
     });
 
     if (hasOverlap) {
-        alert('Ya existe una clase en ese horario');
+        alert('There is already a class at that time');
         return;
     }
 
@@ -245,7 +245,7 @@ function showClassModal(classInfo) {
     modal.innerHTML = `
         <h3>${classInfo.name}</h3>
         <p>Horario: ${classInfo.startTime} - ${classInfo.endTime}</p>
-        <button class="delete-class-btn" onclick="deleteClass('${classInfo.id}')">Eliminar clase</button>
+        <button class="delete-class-btn" onclick="deleteClass('${classInfo.id}')">Delete class</button>
     `;
 
     modal.style.display = 'block';
@@ -290,7 +290,7 @@ function addClass() {
     }
 
     if (!isValidTimeRange(startTime, endTime)) {
-        alert('El horario debe estar entre las 7:00 y las 23:59, y la hora de fin debe ser posterior a la de inicio');
+        alert('The schedule must be between 7:00 and 23:59, and the end time must be after the start time.');
         return;
     }
 
@@ -304,7 +304,7 @@ function addClass() {
     let schedule = JSON.parse(localStorage.getItem(`schedule_${day}`) || '[]');
     
     if (hasTimeConflict(schedule, startTime, endTime)) {
-        alert('Ya existe una clase en ese horario');
+        alert('There is already a class at that time');
         return;
     }
 
@@ -344,7 +344,7 @@ function displaySchedule(day, schedule) {
     dayElement.innerHTML = '';
 
     if (schedule.length === 0) {
-        dayElement.innerHTML = '<div class="no-classes">No hay clases programadas</div>';
+        dayElement.innerHTML = '<div class="no-classes">There are no classes scheduled</div>';
         return;
     }
 
@@ -410,7 +410,7 @@ async function processHomework() {
     const question = questionInput.value.trim();
     
     if (!question) {
-        showError('Por favor, escribe una pregunta o tema.');
+        showError('Please write a question or topic.');
         return;
     }
 
@@ -419,7 +419,7 @@ async function processHomework() {
     // Deshabilitar el botón y mostrar loader
     submitButton.disabled = true;
     loader.classList.remove('hidden');
-    responseArea.textContent = 'Procesando tu pregunta...';
+    responseArea.textContent = 'Processing your homework...';
 
     try {
         const url = 'https://magicloops.dev/api/loop/a39c572a-4846-47f5-94db-e6bc531c5b06/run';
@@ -433,7 +433,7 @@ async function processHomework() {
         });
 
         if (!response.ok) {
-            throw new Error('Error en la conexión con el servidor');
+            throw new Error('Error connecting to the server');
         }
 
         const data = await response.json();
@@ -442,7 +442,7 @@ async function processHomework() {
         displayResponse(data.respuesta);
 
     } catch (error) {
-        showError('Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+        showError('Sorry, there was an error processing your question. Please try again.');
         console.error('Error:', error);
     } finally {
         // Restaurar el estado del botón y ocultar loader
