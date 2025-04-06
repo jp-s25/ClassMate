@@ -278,10 +278,6 @@ function deleteClass(classId) {
     document.querySelector('.modal-backdrop').style.display = 'none';
 }
 
-// ... (mantener el resto de las funciones) ...
-
-// ... (mantener las funciones anteriores de tareas) ...
-
 function addClass() {
     const className = document.getElementById('className').value.trim();
     const startTime = document.getElementById('startTime').value;
@@ -400,4 +396,123 @@ function clearScheduleInputs() {
 document.addEventListener('DOMContentLoaded', () => {
     loadTasks();
     displayAllSchedules();
+});
+
+// Agregar estas nuevas funciones al archivo existente
+
+// Función para procesar la tarea
+async function processHomework() {
+    const questionInput = document.getElementById('homeworkQuestion');
+    const submitButton = document.getElementById('submitHomework');
+    const responseArea = document.getElementById('homeworkResponse');
+    const loader = submitButton.querySelector('.loader');
+    
+    const question = questionInput.value.trim();
+    
+    if (!question) {
+        showError('Por favor, escribe una pregunta o tema.');
+        return;
+    }
+
+    let prompt = `I have a school assignment to do. Please give me a concise answer, without beating around the bush.THE MOST IMPORTANT THING IS: GIVE ME AN ANSWER IN ENGLISH, It doesn't matter if the homework is in Spanish: ${question}`;
+
+    // Deshabilitar el botón y mostrar loader
+    submitButton.disabled = true;
+    loader.classList.remove('hidden');
+    responseArea.textContent = 'Procesando tu pregunta...';
+
+    try {
+        const url = 'https://magicloops.dev/api/loop/a39c572a-4846-47f5-94db-e6bc531c5b06/run';
+        
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ question: prompt }),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error en la conexión con el servidor');
+        }
+
+        const data = await response.json();
+        
+        // Mostrar la respuesta formateada
+        displayResponse(data.respuesta);
+
+    } catch (error) {
+        showError('Lo siento, hubo un error al procesar tu pregunta. Por favor, intenta de nuevo.');
+        console.error('Error:', error);
+    } finally {
+        // Restaurar el estado del botón y ocultar loader
+        submitButton.disabled = false;
+        loader.classList.add('hidden');
+    }
+}
+
+// Función para mostrar la respuesta
+function displayResponse(data) {
+    const responseArea = document.getElementById('homeworkResponse');
+    
+    // Asumiendo que la respuesta viene en data.response o similar
+    // Ajusta esto según la estructura real de la respuesta de tu API
+    const response = data.response || data.result || data.message || JSON.stringify(data);
+    
+    responseArea.innerHTML = `
+        <div class="response-text">
+            ${formatResponse(response)}
+        </div>
+    `;
+}
+
+// Función para formatear la respuesta
+function formatResponse(text) {
+    // Convertir los "\n" en saltos de línea HTML
+    let formattedText = text
+        .replace(/\\n/g, '<br>')    // "\n" como texto plano (de la IA)
+        .replace(/\n/g, '<br>')     // saltos de línea reales
+        .replace(/[#\\]/g, '')      // eliminar caracteres especiales como "#" y "\"
+        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // negrita tipo Markdown
+        .replace(/\*(.*?)\*/g, '<em>$1</em>');            // cursiva tipo Markdown
+
+    return formattedText;
+}
+
+// Función para mostrar errores
+function showError(message) {
+    const responseArea = document.getElementById('homeworkResponse');
+    responseArea.innerHTML = `
+        <div class="error-message">
+            ${message}
+        </div>
+    `;
+}
+
+// Actualizar la función switchTab existente para incluir la nueva sección
+function switchTab(tabName) {
+    const tabs = document.querySelectorAll('.tab-button');
+    const sections = document.querySelectorAll('section');
+    
+    tabs.forEach(tab => {
+        tab.classList.remove('active');
+        if(tab.textContent.toLowerCase().includes(tabName)) {
+            tab.classList.add('active');
+        }
+    });
+
+    sections.forEach(section => {
+        section.classList.add('hidden-section');
+        if(section.id === `${tabName}-section`) {
+            section.classList.remove('hidden-section');
+        }
+    });
+}
+
+// Event listener para el textarea
+document.getElementById('homeworkQuestion')?.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && e.ctrlKey) {
+        e.preventDefault();
+        processHomework();
+    }
 });

@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
+    background-color: #0b263e;
 }
 
 .container {
@@ -24,7 +24,7 @@ header {
 }
 
 h1 {
-    color: #1a73e8;
+    color: #194d79;
     margin-bottom: 20px;
     text-align: center;
 }
@@ -48,7 +48,7 @@ h1 {
 }
 
 .tab-button.active {
-    background-color: #1a73e8;
+    background-color: #2f7cbe;
     color: white;
 }
 
@@ -84,7 +84,7 @@ input[type="text"] {
 
 button {
     padding: 10px 20px;
-    background-color: #1a73e8;
+    background-color: #194d79;
     color: white;
     border: none;
     border-radius: 5px;
@@ -177,7 +177,7 @@ button:hover {
     position: absolute;
     left: 2px;
     right: 2px;
-    background-color: #1a73e8;
+    background-color: #194d79;
     color: white;
     padding: 5px;
     border-radius: 4px;
@@ -189,22 +189,11 @@ button:hover {
     z-index: 2;
 }
 
-/* Ajustar la altura en vista móvil */
-@media (max-width: 768px) {
-    .time-slot {
-        height: 25px; /* Altura reducida en móviles */
-    }
-    
-    .time-slots, .class-slots {
-        min-height: 850px; /* Ajustado para móviles */
-    }
-}
-
 .class-block {
     position: absolute;
     left: 2px;
     right: 2px;
-    background-color: #1a73e8;
+    background-color: #194d79;
     color: white;
     padding: 5px;
     border-radius: 4px;
@@ -218,47 +207,6 @@ button:hover {
 .class-block:hover {
     background-color: #1557b0;
     z-index: 3;
-}
-
-/* Estilos responsivos actualizados */
-@media (max-width: 768px) {
-    .schedule-grid {
-        grid-template-columns: 60px repeat(5, minmax(120px, 1fr));
-        font-size: 0.85em;
-    }
-
-    .time-column {
-        min-width: 60px;
-    }
-
-    .class-input {
-        flex-direction: column;
-        gap: 8px;
-    }
-
-    .class-block {
-        font-size: 0.8em;
-        padding: 3px;
-    }
-
-    .time-slot {
-        height: 50px; /* Reducir altura en móviles */
-    }
-
-    /* Hacer el contenedor scrolleable horizontalmente */
-    .schedule-section {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
-
-    /* Ajustar los controles de entrada en móviles */
-    input[type="time"],
-    input[type="text"],
-    select,
-    button {
-        width: 100%;
-        margin: 2px 0;
-    }
 }
 
 /* Agregar estilos para el modal de clase */
@@ -392,7 +340,7 @@ button:hover {
 
 .class-name {
     font-weight: bold;
-    color: #1a73e8;
+    color: #194d79;
 }
 
 .class-time {
@@ -420,16 +368,151 @@ button:hover {
     background-color: #c82333;
 }
 
+/* Agregar estos estilos para la nueva sección */
+.homework-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.input-area {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#homeworkQuestion {
+    width: 100%;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    resize: vertical;
+    min-height: 100px;
+    font-family: inherit;
+}
+
+#submitHomework {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 24px;
+    background-color: #1a73e8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#submitHomework:hover {
+    background-color: #1557b0;
+}
+
+#submitHomework:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.response-area {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    min-height: 200px;
+}
+
+.response-content {
+    white-space: pre-wrap;
+    line-height: 1.5;
+}
+
+.loader {
+    width: 20px;
+    height: 20px;
+    border: 3px solid #ffffff;
+    border-radius: 50%;
+    border-top-color: transparent;
+    animation: spin 1s linear infinite;
+}
+
+.loader.hidden {
+    display: none;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Estilos para mensajes de error */
+.error-message {
+    color: #dc3545;
+    background-color: #ffe6e6;
+    padding: 10px;
+    border-radius: 4px;
+    margin-top: 10px;
+}
+
+.logo {
+    width: 300px;
+    height: auto;
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
-    .schedule-input {
+    .tab-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .task-input {
         flex-direction: column;
     }
-    
-    .time-inputs {
+
+    input[type="text"], select, input[type="time"], button {
         width: 100%;
     }
-    
-    .time-inputs input[type="time"] {
-        flex: 1;
+
+    .schedule-grid {
+        grid-template-columns: 60px repeat(3, 1fr); /* reducir columnas visibles en pantallas pequeñas */
+        overflow-x: scroll;
+    }
+
+    .class-block {
+        font-size: 0.75em;
+        padding: 3px;
+    }
+
+    .class-modal {
+        width: 90%;
+    }
+
+    .schedule-input {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .class-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .class-actions {
+        width: 100%;
+        justify-content: flex-end;
+    }
+
+    .logo {
+        width: 200px;
     }
 }
