@@ -480,13 +480,50 @@ async function processHomework() {
     }
 }
 
+function stripQuotes(text) {
+    if (typeof text !== 'string') return text;
+
+    const firstChar = text.charAt(0);
+    const lastChar = text.charAt(text.length - 1);
+
+    if ((firstChar === '"' || firstChar === "'") && firstChar === lastChar) {
+        return text.slice(1, -1);
+    }
+
+    return text;
+}
+
+
+function cleanResponse(text) {
+    if (typeof text !== 'string') return text;
+
+    // Eliminar espacios al inicio y final
+    text = text.trim();
+
+    const firstChar = text.charAt(0);
+    const lastChar = text.charAt(text.length - 1);
+
+    // Si empieza y termina con la misma comilla (simple o doble), la quitamos
+    if ((firstChar === '"' || firstChar === "'") && firstChar === lastChar) {
+        text = text.slice(1, -1).trim(); // Volvemos a hacer trim por si dentro de las comillas hay más espacios
+    }
+
+    return text;
+}
+
+
+
 // Función para mostrar la respuesta
 function displayResponse(data) {
     const responseArea = document.getElementById('homeworkResponse');
     
     // Asumiendo que la respuesta viene en data.response o similar
     // Ajusta esto según la estructura real de la respuesta de tu API
-    const response = data.response || data.result || data.message || JSON.stringify(data);
+    let response = data.response || data.result || data.message || data.respuesta || JSON.stringify(data);
+    response = cleanResponse(response);
+
+    console.log(response); // Para depuración
+
     
     responseArea.innerHTML = `
         <div class="response-text">
